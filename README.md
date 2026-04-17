@@ -1,4 +1,4 @@
-# Cybersecurity & DevSecOps Portfolio
+# Cybersecurity and DevSecOps Portfolio
 
 Hands-on projects focused on secure software development, CI/CD pipelines, and cloud security, combining blue team fundamentals with DevSecOps practices.
 
