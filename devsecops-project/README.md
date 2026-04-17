@@ -2,7 +2,7 @@
 
 This project demonstrates the integration of security practices early in the Software Development Lifecycle (SDLC) by building and analyzing a simple vulnerable application.
 
-The goal is to apply a **shift-left security approach**, identifying and mitigating vulnerabilities before deployment.
+The goal is to apply a **shift-left security approach**, identifying and understanding vulnerabilities before deployment.
 
 ---
 
@@ -12,7 +12,6 @@ The goal is to apply a **shift-left security approach**, identifying and mitigat
 * Introduce a controlled vulnerability
 * Containerize the application using Docker
 * Perform vulnerability scanning
-* Document findings and mitigation
 
 ---
 
@@ -20,131 +19,107 @@ The goal is to apply a **shift-left security approach**, identifying and mitigat
 
 * Python (Flask)
 * Docker
-* Trivy (vulnerability scanner)
+* Trivy
 * Linux
 
 ---
 
 ## Application Overview
 
-The application is a simple login system developed for demonstration purposes.
-
-It intentionally includes insecure input handling to simulate a common vulnerability scenario.
-
----
-
-## Project Structure
-
-[ADD PRINT HERE – structure.png]
-
-> Project structure showing a containerized application with defined components (app, Dockerfile, dependencies).
+A simple login application was developed for demonstration purposes.
+The application intentionally lacks proper input validation to simulate insecure coding practices.
 
 ---
 
-## Vulnerability Introduced
+## Vulnerability
 
 **Type:** Improper Input Validation
 
-The application does not properly sanitize user input, which may allow malicious data to be processed.
+The application reflects user input directly without sanitization, which may allow malicious input such as scripts or injection payloads.
 
-[ADD PRINT HERE – code.png]
+### Evidence
 
-> The application directly reflects user input without validation, demonstrating insecure coding practices that may lead to XSS or injection attacks.
+[ADD PRINT 1 – code.png]
+
+> Vulnerable code where user input is returned without validation.
 
 ---
 
 ## Running the Application
 
-### 1. Build Docker Image
+### Build Image
 
 ```bash
 docker build -t devsecops-app .
 ```
 
-[ADD PRINT HERE – docker-build.png]
-
-> Docker image build process, ensuring a consistent and reproducible environment.
-
----
-
-### 2. Run Container
+### Run Container
 
 ```bash
 docker run -p 5000:5000 devsecops-app
 ```
 
+[ADD PRINT 2 – docker-run.png]
+
+> Container running locally, exposing the application.
+
 ---
 
-### 3. Access Application
+## Application Execution
+
+Access the application at:
 
 http://localhost:5000
 
-[ADD PRINT HERE – app-running.png]
+[ADD PRINT 3 – app-running.png]
 
-> Application running locally inside a container, exposing a login interface.
+> Web application interface running in the browser.
 
 ---
 
 ## Security Testing
 
-### Input Validation Test
+A test input was used to evaluate how the application handles user input:
 
-Example input used:
-
-```bash
+```html
 <script>alert(1)</script>
 ```
 
-[ADD PRINT HERE – xss-test.png]
+[ADD PRINT 4 – xss-test.png]
 
-> The application reflects user input without sanitization, indicating a potential cross-site scripting (XSS) vulnerability.
+> The application reflects the input directly, indicating lack of sanitization and potential XSS vulnerability.
 
 ---
 
 ## Vulnerability Scanning
 
-### Run Trivy Scan
+The container image was scanned using Trivy:
 
 ```bash
 trivy image devsecops-app
 ```
 
-[ADD PRINT HERE – trivy-scan.png]
+[ADD PRINT 5 – trivy-scan.png]
 
-> Scan results highlighting vulnerabilities in dependencies and the container image.
-
----
-
-## Findings
-
-* Outdated dependencies detected
-* Vulnerabilities in base image
-* Lack of input validation in application logic
+> Scan results identifying vulnerabilities in the container image and dependencies.
 
 ---
 
-## Mitigation (Next Steps)
+## Key Learnings
+
+* Importance of Secure SDLC practices
+* Risks of improper input validation
+* Basics of container security
+* Introduction to vulnerability scanning
+
+---
+
+## Next Steps
 
 * Implement input validation and sanitization
-* Update dependencies to secure versions
-* Use secure base images
-* Add automated security checks in CI/CD pipeline
-
----
-
-## Key Learning Outcomes
-
-* Understanding of Secure SDLC principles
-* Practical exposure to container security
-* Identification of common vulnerabilities
-* Importance of early security integration
-
----
-
-## Next Phase
-
-Phase 2 – CI/CD Pipeline Integration
-Phase 3 – DevSecOps Pipeline
+* Update dependencies
+* Integrate CI/CD pipeline
+* Add automated security checks
 
 ---
 
