@@ -33,28 +33,23 @@ It intentionally includes insecure input handling to simulate a common vulnerabi
 
 ---
 
+## Project Structure
+
+[ADD PRINT HERE – structure.png]
+
+> Project structure showing a containerized application with defined components (app, Dockerfile, dependencies).
+
+---
+
 ## Vulnerability Introduced
 
 **Type:** Improper Input Validation
 
 The application does not properly sanitize user input, which may allow malicious data to be processed.
 
-This simulates real-world insecure coding practices found in early-stage applications.
+[ADD PRINT HERE – code.png]
 
----
-
-## Project Structure
-
-```
-devsecops-project/
-│
-├── app/
-│   └── app.py
-│
-├── Dockerfile
-├── requirements.txt
-└── README.md
-```
+> The application directly reflects user input without validation, demonstrating insecure coding practices that may lead to XSS or injection attacks.
 
 ---
 
@@ -62,15 +57,19 @@ devsecops-project/
 
 ### 1. Build Docker Image
 
-```
+```bash
 docker build -t devsecops-app .
 ```
+
+[ADD PRINT HERE – docker-build.png]
+
+> Docker image build process, ensuring a consistent and reproducible environment.
 
 ---
 
 ### 2. Run Container
 
-```
+```bash
 docker run -p 5000:5000 devsecops-app
 ```
 
@@ -78,11 +77,27 @@ docker run -p 5000:5000 devsecops-app
 
 ### 3. Access Application
 
-Open in browser:
-
-```
 http://localhost:5000
+
+[ADD PRINT HERE – app-running.png]
+
+> Application running locally inside a container, exposing a login interface.
+
+---
+
+## Security Testing
+
+### Input Validation Test
+
+Example input used:
+
+```bash
+<script>alert(1)</script>
 ```
+
+[ADD PRINT HERE – xss-test.png]
+
+> The application reflects user input without sanitization, indicating a potential cross-site scripting (XSS) vulnerability.
 
 ---
 
@@ -90,16 +105,20 @@ http://localhost:5000
 
 ### Run Trivy Scan
 
-```
+```bash
 trivy image devsecops-app
 ```
+
+[ADD PRINT HERE – trivy-scan.png]
+
+> Scan results highlighting vulnerabilities in dependencies and the container image.
 
 ---
 
 ## Findings
 
 * Outdated dependencies detected
-* Potential vulnerabilities in base image
+* Vulnerabilities in base image
 * Lack of input validation in application logic
 
 ---
@@ -124,15 +143,8 @@ trivy image devsecops-app
 
 ## Next Phase
 
-This project will evolve into:
-
-**Phase 2 – CI/CD Pipeline Integration**
-
-* Automating build and test processes
-
-**Phase 3 – DevSecOps Pipeline**
-
-* Integrating security checks into CI/CD
+Phase 2 – CI/CD Pipeline Integration
+Phase 3 – DevSecOps Pipeline
 
 ---
 
